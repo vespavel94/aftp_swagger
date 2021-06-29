@@ -1,0 +1,694 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Swagger AFTPMSOV Documentation"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "matvey.lyakh@accenture.com"
+host: "localhost:3000"
+schemes:
+  - "http"
+paths:
+  /config/language/list:
+    get:
+      tags:
+        - "language"
+      summary: "Get a list of languages"
+      description: ""
+      operationId: "getLanguageList"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/LanguageList"
+        "400":
+          description: "Bad Request"
+  /config/timezone/list:
+    get:
+      tags:
+        - "timezone"
+      summary: "Get a list of timezones"
+      description: ""
+      operationId: "getTimezoneList"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/TimezoneList"
+        "400":
+          description: "Bad Request"
+  /config/reminder/data:
+    get:
+      tags:
+        - "reminder initial data"
+      summary: "Get a initial dat of reminder"
+      description: ""
+      operationId: "getReminderInitialData"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/ReminderInitialData"
+        "400":
+          description: "Bad Request"
+  /user/{userID}/reminder/set:
+    post:
+      tags:
+        - "user"
+      summary: "Set a user reminder data"
+      description: "Set a user reminder data"
+      operationId: "setReminderUserData"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "userID"
+          type: "string"
+          required: true
+          description: "User ID to set reminder data"
+        - in: "body"
+          name: "body"
+          description: "Set reminder data to user"
+          schema:
+            $ref: "#/definitions/ReminderDataResponse"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/SetReminderDataResponse"
+        "400":
+          description: "Bad Request"
+  /user/language/{langID}/subscription/{emailTypeID}:
+    get:
+      tags:
+        - "user"
+      summary: "Get a subscription language description"
+      description: "Get a subscription language description"
+      operationId: "getSubscriptionDescription"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: langID
+          type: string
+          required: true
+          description: Language ID.
+        - in: path
+          name: emailTypeID
+          type: string
+          required: true
+          description: Email type ID.
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/LanguageSubscriptionResponse"
+        "400":
+          description: "Bad Request"
+    put:
+      tags:
+        - "user"
+      summary: "Update a subscription language description"
+      description: "Update a subscription language description"
+      operationId: "updateSubscriptionDescription"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: langID
+          type: string
+          required: true
+          description: Language ID.
+        - in: path
+          name: emailTypeID
+          type: string
+          required: true
+          description: Email type ID.
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/LanguageSubscriptionResponse"
+        "400":
+          description: "Bad Request"
+  /user/{userID}/subscription/{emailTypeID}:
+    get:
+      tags:
+        - "user"
+      summary: "Get a subscription status"
+      description: "Get a subscription status"
+      operationId: "getSubscription"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: userID
+          type: string
+          required: true
+          description: User ID.
+        - in: path
+          name: emailTypeID
+          type: string
+          required: true
+          description: Email type ID.
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/SubscriptionResponse"
+        "400":
+          description: "Bad Request"
+    put:
+      tags:
+        - "user"
+      summary: "Update a subscription status"
+      description: "Update a subscription status"
+      operationId: "updateSubscription"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: userID
+          type: string
+          required: true
+          description: User ID.
+        - in: path
+          name: emailTypeID
+          type: string
+          required: true
+          description: Email type ID.
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/SubscriptionResponse"
+        "400":
+          description: "Bad Request"
+  /user/mail/list:
+    get:
+      tags:
+        - "user"
+      summary: "List settings toggle items"
+      description: "List settings toggle items"
+      operationId: "listEmails"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/ListEmailsResponse"
+        "400":
+          description: "Bad Request"
+  /user/mail/{emailTypeID}:
+    get:
+      tags:
+        - "user"
+      summary: "Get mail type description"
+      description: "Get mail type description"
+      operationId: "getEmailsType"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: emailTypeID
+          type: string
+          required: true
+          description: Email type ID.
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/ToggleSettingItemResponse"
+        "400":
+          description: "Bad Request"
+    put:
+      tags:
+        - "user"
+      summary: "Get mail type description"
+      description: "Get mail type description"
+      operationId: "updateEmailsType"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: emailTypeID
+          type: string
+          required: true
+          description: Email type ID.
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/ToggleSettingItemResponse"
+        "400":
+          description: "Bad Request"
+  /user/{userID}/role/list:
+    get:
+      tags:
+        - "user"
+      summary: "Get users eligible roles"
+      description: "Get users eligible roles"
+      operationId: "getUserEligibleRoles"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: userID
+          type: string
+          required: true
+          description: User ID.
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/EligibleRolesResponse"
+        "400":
+          description: "Bad Request"
+definitions:
+  EligibleRoleItem:
+    type: "object"
+    properties:
+      skillID:
+        type: "string"
+        example: "1"
+      pLevel:
+        type: "number"
+        example: 1
+      points:
+        type: "number"
+        example: 1
+      tgtLevel:
+        type: "number"
+        example: 1
+      tgtDate:
+        type: "number"
+        example: 1623874952682
+      PK:
+        type: "string"
+        example: "USR#ID#1"
+      SK:
+        type: "string"
+        example: "SKILL#ID#1"
+  EligibleRolesResponse:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/EligibleRoleItem"
+  ToggleSettingItem:
+    type: "object"
+    properties:
+      emailID:
+        type: "string"
+        example: "1"
+      status:
+        type: "boolean"
+        example: "true"
+      PK:
+        type: "string"
+        example: "USR#ID#1"
+      SK:
+        type: "string"
+        example: "SUBS#EMAIL#TYPE#1"
+  ListEmailsResponse:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/ToggleSettingItem"
+  ToggleSettingItemResponse:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        $ref: "#/definitions/ToggleSettingItem"
+  Subscription:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            emailID:
+              type: "string"
+              example: "1"
+            status:
+              type: "boolean"
+              example: "true"
+            PK:
+              type: "string"
+              example: "USR#ID#1"
+            SK:
+              type: "string"
+              example: "SUBS#EMAIL#TYPE#1"
+  SubscriptionResponse:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        $ref: "#/definitions/Subscription"
+  LanguageSubscription:
+    type: "object"
+    properties:
+      typeID:
+        type: "string"
+        example: "1"
+      label:
+        type: "string"
+        example: "some"
+      desc:
+        type: "string"
+        example: "some"
+      PK:
+        type: "string"
+        example: "LANG#ID#1"
+      SK:
+        type: "string"
+        example: "EMAIL#TYPE#1"
+
+  LanguageSubscriptionResponse:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        $ref: "#/definitions/LanguageSubscription"
+  LanguageList:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/LanguageListResponse"
+
+  LanguageListResponse:
+    type: "object"
+    properties:
+      langID:
+        type: "string"
+        example: "1"
+      default:
+        type: "boolean"
+        example: "true"
+      lCode:
+        type: "string"
+        example: "1"
+      country:
+        type: "string"
+        example: "USA"
+      lName:
+        type: "string"
+        example: "English"
+      SK:
+        type: "string"
+        example: "2"
+      PK:
+        type: "string"
+        example: "LANGUAGE#"
+      rtl:
+        type: "string"
+        example: "left"
+    xml:
+      name: "LanguageList"
+
+  TimezoneList:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/TimezoneListResponse"
+
+  TimezoneListResponse:
+    type: "object"
+    properties:
+      tzId:
+        type: "string"
+        example: "1"
+      name:
+        type: "string"
+        example: "(UTC+3) Minsk"
+      default:
+        type: "boolean"
+        example: "true"
+      tzText:
+        type: "string"
+        example: "(UTC+3) Minsk"
+      tzOffset:
+        type: "string"
+        example: "+3"
+      DST:
+        type: "boolean"
+        example: "true"
+      SK:
+        type: "string"
+        example: "2"
+      PK:
+        type: "string"
+        example: "LANGUAGE#"
+
+  ReminderInitialData:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+        example: "true"
+      message:
+        type: "string"
+        example: "Get is Success"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/ReminderInitialDataResponse"
+
+  ReminderInitialDataResponse:
+    type: "object"
+    properties:
+      dayList:
+        type: "string"
+        example: "Monday"
+      endDate:
+        type: "string"
+        example: "2021-12-31T00:00:00"
+      subscriptionEndDate:
+        type: "string"
+        example: "2021-12-31T00:00:00"
+      delivery:
+        type: "string"
+        example: "Download"
+      endTime:
+        type: "string"
+        example: "+3"
+      startTime:
+        type: "string"
+        example: "true"
+      startDate:
+        type: "string"
+        example: "2021-06-04T15:30:00"
+      currentTime:
+        type: "string"
+        example: "3:35:54 PM"
+      currentDate:
+        type: "string"
+        example: "2021-06-11T12:35:54.731Z"
+      SK:
+        type: "string"
+        example: "RID#1"
+      PK:
+        type: "string"
+        example: "REMINDER#"
+
+  ReminderData:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+        example: "true"
+      message:
+        type: "string"
+        example: "Get is Success"
+      data:
+        $ref: "#/definitions/ReminderDataResponse"
+
+  ReminderDataResponse:
+    type: "object"
+    properties:
+      dayList:
+        type: "string"
+        example: "Monday"
+      endDate:
+        type: "string"
+        example: "2021-12-31T00:00:00"
+      subscriptionEndDate:
+        type: "string"
+        example: "2021-12-31T00:00:00"
+      delivery:
+        type: "string"
+        example: "Download"
+      endTime:
+        type: "string"
+        example: "+3"
+      startTime:
+        type: "string"
+        example: "true"
+      startDate:
+        type: "string"
+        example: "2021-06-04T15:30:00"
+      currentTime:
+        type: "string"
+        example: "3:35:54 PM"
+      currentDate:
+        type: "string"
+        example: "2021-06-11T12:35:54.731Z"
+      SK:
+        type: "string"
+        example: "ID#4"
+      PK:
+        type: "string"
+        example: "USR#ID#4"
+
+  SetReminderData:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+        example: "true"
+      message:
+        type: "string"
+        example: "Get is Success"
+      data:
+        $ref: "#/definitions/SetReminderDataResponse"
+
+  SetReminderDataResponse:
+    type: "object"
+    properties:
+      dayList:
+        type: "string"
+        example: "Monday"
+      endDate:
+        type: "string"
+        example: "2021-12-31T00:00:00"
+      subscriptionEndDate:
+        type: "string"
+        example: "2021-12-31T00:00:00"
+      delivery:
+        type: "string"
+        example: "Download"
+      endTime:
+        type: "string"
+        example: "+3"
+      startTime:
+        type: "string"
+        example: "true"
+      startDate:
+        type: "string"
+        example: "2021-06-04T15:30:00"
+      currentTime:
+        type: "string"
+        example: "3:35:54 PM"
+      currentDate:
+        type: "string"
+        example: "2021-06-11T12:35:54.731Z"
+      url:
+        type: "string"
+        example: "www.google.com"
+      SK:
+        type: "string"
+        example: "ID#4"
+      PK:
+        type: "string"
+        example: "USR#ID#4"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
