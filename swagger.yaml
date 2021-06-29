@@ -1,0 +1,377 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Swagger AFTPMSOV Documentation"
+  termsOfService: "http://swagger.io/terms/"
+host: "localhost:3000"
+schemes:
+  - "http"
+paths:
+  /skill/category/list:
+    get:
+      tags:
+        - "skill"
+      summary: "Get a list of skills categories"
+      description: "Get a list of skills categories"
+      operationId: "getSkillCategoriesList"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/SkillListResponse"
+        "400":
+          description: "Bad Request"
+  /skill/category/{categoryID}/list:
+    get:
+      tags:
+        - "skill"
+      summary: "Get a list of skills in specified category"
+      description: "Get a list of skills in specified category"
+      operationId: "getSkillListByCategory"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "categoryID"
+          type: "string"
+          required: true
+          description: "specified categoryID to get skills list"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/SkillListResponse"
+        "400":
+          description: "Bad Request"
+  /skill/{skillID}:
+    get:
+      tags:
+        - "skill"
+      summary: "Get a skill by ID"
+      description: "Get a skill by ID"
+      operationId: "getSkillItem"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "skillID"
+          type: "string"
+          required: true
+          description: "ID of skill to get"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/SkillItemResponse"
+        "400":
+          description: "Bad Request"
+  /skill/proficiency/list:
+    get:
+      tags:
+        - "proficiency"
+      summary: "Get a proficiencies list"
+      description: "Get a proficiencies list"
+      operationId: "getProficiencyList"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/ProficiencyListResponse"
+        "400":
+          description: "Bad Request"
+  /skill/proficiency/{proficiencyID}:
+    get:
+      tags:
+        - "proficiency"
+      summary: "Get a proficiency by ID"
+      description: "Get a proficiency by ID"
+      operationId: "getProficiencyItem"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "proficiencyID"
+          type: "string"
+          required: true
+          description: "ID of proficiency to get"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/SkillItemResponse"
+        "400":
+          description: "Bad Request"
+  /skill/proficiency/update:
+    put:
+      tags:
+        - "proficiency"
+      summary: "Update proficiency list"
+      description: "Update proficiency lis"
+      operationId: "updateProficiencyList"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Array of updated proficiency list"
+          schema:
+            $ref: "#/definitions/ProficiencyUpdateRequest"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/ProficiencyUpdateResponse"
+        "400":
+          description: "Bad Request"
+  /skill/learning-role/category/list:
+    get:
+      tags:
+        - "learning-role"
+      summary: "Get a list of learning roles categories"
+      description: "Get a list of learning roles categories"
+      operationId: "getLearningRoleCategoriesList"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/LearningRoleListResponse"
+        "400":
+          description: "Bad Request"
+  /skill/learning-role/category/{categoryID}/list:
+    get:
+      tags:
+        - "learning-role"
+      summary: "Get a list of learning roles in specified category"
+      description: "Get a list of learning roles in specified category"
+      operationId: "getLearningRoleListByCategory"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "categoryID"
+          type: "string"
+          required: true
+          description: "specified categoryID to get learing roles list"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/LearningRoleListResponse"
+        "400":
+          description: "Bad Request"
+  /skill/learning-role/{learningRoleID}:
+    get:
+      tags:
+        - "learning-role"
+      summary: "Get a learning role by ID"
+      description: "Get a learning role by ID"
+      operationId: "getLearningRoleItem"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "learningRoleID"
+          type: "string"
+          required: true
+          description: "ID of learning role to get"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/LearningRoleItemResponse"
+        "400":
+          description: "Bad Request"        
+definitions:
+  SkillItem:
+    type: "object"
+    properties:
+      PK:
+        type: "string"
+        example: "SKILL#ID#SK00001"
+      SK:
+        type: "string"
+        example: "ID#SK000011"
+      skillID:
+        type: "string"
+        example: "SK000011"
+      name:
+        type: "string"
+        example: "1st skill"
+      cognition:
+        type: "boolean"
+        example: false
+      desc:
+        type: "string"
+        example: "st skill desc"
+      categoryID:
+        type: "string"
+        example: "1"
+  SkillItemResponse:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        $ref: "#/definitions/SkillItem"           
+  SkillListResponse:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/SkillItem"
+  ProficiencyItem:
+    type: "object"
+    properties:
+        PK:
+          type: "string"
+          example: "PRFCY#PFC00001"
+        SK:
+          type: "string"
+          example: "ID#PFC00001"
+        proficiencyID:
+          type: "string"
+          example: "PFC00001"
+        name:
+          type: "string"
+          example: "1st proficiency name"
+        desk:
+          type: "string"
+          example: "1st proficiency desc"
+        displayOrder:
+          type: "number"
+          example: 1
+        status:
+          type: "boolean"
+          example: true
+  ProficiencyListResponse:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/ProficiencyItem"
+  ProficiencyUpdateRequest:
+    type: "object"
+    properties:
+      proficiencyList:
+        type: "array"
+        items:
+          $ref: "#/definitions/ProficiencyItem"
+  ProficiencyUpdateResponse:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/ProficiencyItem"
+  ProficiencyItemResponse:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        $ref: "#/definitions/ProficiencyItem" 
+  LearningRoleItem:
+    type: "object"
+    properties:
+      PK:
+        type: "string"
+        example: "LRNG#ROLE#ID#LR00002"
+      SK:
+        type: "string"
+        example: "ID#LR00002"
+      learningRoleID:
+        type: "string"
+        example: "LR00002"
+      name:
+        type: "string"
+        example: "1st learning role"
+      desc:
+        type: "string"
+        example: "1st learning role desc"
+      categoryID:
+        type: "string"
+        example: "LRC00001"
+  LearningRoleItemResponse:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        $ref: "#/definitions/LearningRoleItem"           
+  LearningRoleListResponse:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/LearningRoleItem"
+          
