@@ -9,7 +9,7 @@ host: "localhost:3000"
 schemes:
   - "http"
 paths:
-  /config/language/list:
+  /user/config/language/list:
     get:
       tags:
         - "language"
@@ -30,7 +30,7 @@ paths:
             $ref: "#/definitions/LanguageList"
         "400":
           description: "Bad Request"
-  /config/timezone/list:
+  /user/config/timezone/list:
     get:
       tags:
         - "timezone"
@@ -51,7 +51,7 @@ paths:
             $ref: "#/definitions/TimezoneList"
         "400":
           description: "Bad Request"
-  /config/reminder/data:
+  /user/config/reminder/initial/data:
     get:
       tags:
         - "reminder initial data"
@@ -95,14 +95,40 @@ paths:
           name: "body"
           description: "Set reminder data to user"
           schema:
-            $ref: "#/definitions/ReminderDataResponse"
+            $ref: "#/definitions/SetReminderSchemaResponse"
       responses:
         "200":
           description: "Successful operation"
           schema:
-            $ref: "#/definitions/SetReminderDataResponse"
+            $ref: "#/definitions/SetReminderSchema"
         "400":
           description: "Bad Request"
+  /user/{userID}/reminder/data:
+    get:
+      tags:
+        - "user"
+      summary: "Get a reminder data for current user"
+      description: "Get a reminder data for current user"
+      operationId: "getUserReminderData"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: userID
+          type: string
+          required: true
+          description: User ID.
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/UserReminder"
+        "400":
+          description: "Bad request"
   /user/language/{langID}/subscription/{emailTypeID}:
     get:
       tags:
@@ -162,6 +188,55 @@ paths:
           description: "Successful operation"
           schema:
             $ref: "#/definitions/LanguageSubscriptionResponse"
+        "400":
+          description: "Bad Request"
+  /user/{userID}/avatar/upload:
+    post:
+      tags:
+        - "user"
+      summary: Upload avatar to user
+      consumes:
+        - "multipart/form-data"
+      parameters:
+        - in: "formData"
+          name: "image"
+          type: "file"
+          description: "The file to upload"
+          required: true
+        - in: "path"
+          name: "userID"
+          type: "string"
+          required: true
+          description: "User ID to set reminder data"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/UploadAvatarSchema"
+        "400":
+          description: "Bad Request"
+  /user/{userID}/avatar/get:
+    get:
+      tags:
+        - "user"
+      summary: "Get user avatar"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: userID
+          type: string
+          required: true
+          description: User ID.
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/GetAvatarSchema"
         "400":
           description: "Bad Request"
   /user/{userID}/subscription/{emailTypeID}:
@@ -324,6 +399,134 @@ paths:
         "400":
           description: "Bad Request"
 definitions:
+  GetAvatarSchema:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/GetAvatarSchemaResponse"
+  GetAvatarSchemaResponse:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "avatar"
+      metaData:
+        type: "object"
+      uri:
+        type: "string"
+        example: "www.google.com"
+      PK:
+        type: "string"
+        example: "IMG#9d89d5e3-ef80-4746-92f2-e9bacc6a8932"
+      SK:
+        type: "string"
+        example: "ID#"
+  UploadAvatarSchema:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/UploadAvatarSchemaResponse"
+
+  UploadAvatarSchemaResponse:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "avatar"
+      metaData:
+        type: "object"
+      uri:
+        type: "string"
+        example: "www.google.com"
+      PK:
+        type: "string"
+        example: "IMG#9d89d5e3-ef80-4746-92f2-e9bacc6a8932"
+      SK:
+        type: "string"
+        example: "ID#"
+      imgId:
+        type: "string"
+        example: "9d89d5e3-ef80-4746-92f2-e9bacc6a8932.png"
+  UserReminder:
+    type: "object"
+    properties:
+      result:
+        type: "boolean"
+      message:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/UserReminderResponse"
+  UserReminderResponse:
+    type: "object"
+    properties:
+      delivery:
+        type: "string"
+        example: "download"
+      rType:
+        type: "string"
+        example: "2"
+      reminderID:
+        type: "string"
+        example: "1"
+      rLink:
+        type: "string"
+        example: "www.google.com"
+      rDays:
+        type: "string"
+        example: "Monday"
+      endDate:
+        type: "string"
+        example: "2021-12-31T00:00:00"
+      endTime:
+        type: "string"
+        example: "+3"
+      startTime:
+        type: "string"
+        example: "true"
+      startDate:
+        type: "string"
+        example: "2021-06-04T15:30:00"
+      PK:
+        type: "string"
+        example: "USR#ID#4"
+      SK:
+        type: "string"
+        example: "ID#4"
+      reminderTypeList:
+        type: "array"
+        items:
+          $ref: "#/definitions/UserReminderTypeList"
+  UserReminderTypeList:
+    type: "object"
+    properties:
+      PK:
+        type: "string"
+        example: "USR#ID#4"
+      SK:
+        type: "string"
+        example: "ID#4"
+      reminderType:
+        type: "string"
+        example: "1"
+      label:
+        type: "string"
+        example: "Everyday"
+      fields:
+        type: "object"
   EligibleRoleItem:
     type: "object"
     properties:
@@ -554,7 +757,7 @@ definitions:
   ReminderInitialDataResponse:
     type: "object"
     properties:
-      dayList:
+      rDays:
         type: "string"
         example: "Monday"
       endDate:
@@ -587,8 +790,10 @@ definitions:
       PK:
         type: "string"
         example: "REMINDER#"
+      reminderTypeList:
+        $ref: "#/definitions/UserReminderTypeList"
 
-  ReminderData:
+  SetReminderSchema:
     type: "object"
     properties:
       result:
@@ -596,14 +801,16 @@ definitions:
         example: "true"
       message:
         type: "string"
-        example: "Get is Success"
+        example: "Set reminder is success"
       data:
-        $ref: "#/definitions/ReminderDataResponse"
+        type: "array"
+        items:
+          $ref: "#/definitions/SetReminderSchemaResponse"
 
-  ReminderDataResponse:
+  SetReminderSchemaResponse:
     type: "object"
     properties:
-      dayList:
+      rDays:
         type: "string"
         example: "Monday"
       endDate:
@@ -630,55 +837,9 @@ definitions:
       currentDate:
         type: "string"
         example: "2021-06-11T12:35:54.731Z"
-      SK:
+      rType:
         type: "string"
-        example: "ID#4"
-      PK:
-        type: "string"
-        example: "USR#ID#4"
-
-  SetReminderData:
-    type: "object"
-    properties:
-      result:
-        type: "boolean"
-        example: "true"
-      message:
-        type: "string"
-        example: "Get is Success"
-      data:
-        $ref: "#/definitions/SetReminderDataResponse"
-
-  SetReminderDataResponse:
-    type: "object"
-    properties:
-      dayList:
-        type: "string"
-        example: "Monday"
-      endDate:
-        type: "string"
-        example: "2021-12-31T00:00:00"
-      subscriptionEndDate:
-        type: "string"
-        example: "2021-12-31T00:00:00"
-      delivery:
-        type: "string"
-        example: "Download"
-      endTime:
-        type: "string"
-        example: "+3"
-      startTime:
-        type: "string"
-        example: "true"
-      startDate:
-        type: "string"
-        example: "2021-06-04T15:30:00"
-      currentTime:
-        type: "string"
-        example: "3:35:54 PM"
-      currentDate:
-        type: "string"
-        example: "2021-06-11T12:35:54.731Z"
+        example: "2"
       url:
         type: "string"
         example: "www.google.com"
@@ -688,6 +849,7 @@ definitions:
       PK:
         type: "string"
         example: "USR#ID#4"
+
 
 externalDocs:
   description: "Find out more about Swagger"
